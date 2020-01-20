@@ -1,19 +1,10 @@
-import atexit
-
-import sqlite3
-
-conn = sqlite3.connect('moncafe.db')
-
-
-def _close_db():
-    conn.commit()
-    conn.close()
-
-
-atexit.register(_close_db)
+from repository import repo
+import dto
+import dao
 
 
 def printdb():
+
 
     print_table_as_a_table("Activities", "Activities.date")
     print_table_as_a_table("Coffee_stands", "Coffee_stands.id")
@@ -26,9 +17,8 @@ if __name__ == '__main__':
     printdb()
 
 
-def print_table_as_a_table(table_name, orderby):
-    conn.execute("""SELECT * FROM """ + table_name + """ORDER BY """ + orderby)
-    mylist = conn.fetchAll()
+def print_table_as_a_table(table_name, mylist):
+
     print("\n{}\n".format(table_name))
     for item in mylist:
         print(item)  ##todo str(item)

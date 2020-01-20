@@ -1,18 +1,18 @@
 import atexit
-import sys
 import sqlite3
 import dao
 
 
-class _repository:
+class Repository:
     def __init__(self):
+
         self._conn = sqlite3.connect('moncafe.db')
         self.Employees = dao.Employees(self._conn)
-        self.Suppliers =dao.Suppliers(self._conn)
+        self.Suppliers = dao.Suppliers(self._conn)
         self.Products = dao.Products(self._conn)
         self.Coffee_stands = dao.Coffee_stands(self._conn)
         self.Activities = dao.Activities(self._conn)
-        self.sales = dao.Sales(self._conn)
+        self.Sales = dao.Sales(self._conn)
 
     def _close(self):
         self._conn.commit()
@@ -60,5 +60,9 @@ class _repository:
                     id_employee      INTEGER    PRIMARY KEY REFERENCES Employees(id),
                     sum_sales       INTEGER
 
-
+                );
             """)
+
+
+repo = Repository()
+atexit.register(repo._close)

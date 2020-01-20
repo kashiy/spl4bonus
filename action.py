@@ -1,16 +1,8 @@
-import atexit
 import sys
-import sqlite3
 
-conn = sqlite3.connect('moncafe.db')
-
-
-def _close_db():
-    conn.commit()
-    conn.close()
-
-
-atexit.register(_close_db)
+from repository import repo
+import dto
+import dao
 
 
 def actionMain(args):
@@ -25,24 +17,19 @@ def actionMain(args):
             date_a = word[3]
 
             if quantity_a > 0:  # supply
-                insert_Activities(product_id_a, quantity_a, activator_id_a, date_a)
-                conn.execute("""UPDATE Products SET quantity=quantity+""" + quantity_a+ """ WHERE id="""+product_id_a)
+                repo.Activities.insert(dto.Activitie(product_id_a, quantity_a, activator_id_a, date_a))
+                dao.Products.update_quantity(product_id_a, quantity_a)
 
             elif quantity_a < 0:  # sell
-                conn.execute("""SELECT Products.quantity FROM Products WHERE id="""+quantity_a)
-                quantity_Of_product = conn.fetchone()
+                product = dao.Products.find(product_id_a)
+                quantity_Of_product = product.quantity
                 if quantity_a <= quantity_Of_product:
-                    conn.execute("""UPDATE Products SET quantity=quantity-""" + quantity_a+ """WHERE id="""+product_id_a)
-                    insert_Activities(product_id_a, quantity_a, activator_id_a, date_a)
-                    price=conn.execute("""SELECT Products.price FROM Products WHERE id="""+product_id_a)
-                    conn.execute("""UPDATE sales SET sum_sales=sum_sales+""" + quantity_a*-1*price+ """WHERE id="""+product_id_a)
+                    ## todo quantity is negative.. check if we subtract
+                    dao.Products.update_quantity(product_id_a, quantity_a)
+                    repo.Activities.insert(dto.Activitie(product_id_a, quantity_a, activator_id_a, date_a))
+                    price = product.price
+                    dao.Sales.update_quantity(product_id_a, quantity_a * -1 * price)
 
 
 if __name__ == '__main__':
     actionMain(sys.argv)
-
-
-def insert_Activities(product_id, quantity, activator_id, date):
-    conn.execute("""
-        INSERT INTO Activities (product_id, quantity ,activator_id,date) VALUES (?, ? , ?,?)
-    """, [product_id, quantity, activator_id, date])
