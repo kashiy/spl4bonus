@@ -1,8 +1,6 @@
-import atexit
-import sys
-import sqlite3
 
-conn = sqlite3.connect('moncafe.db')
+
+
 
 
 def _close_db():
