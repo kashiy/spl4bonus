@@ -56,12 +56,34 @@ class Repository:
                 );
 
 
-                    CREATE TABLE sales (
+                    CREATE TABLE Sales (
                     id_employee      INTEGER    PRIMARY KEY REFERENCES Employees(id),
                     sum_sales       INTEGER
 
                 );
             """)
+
+    def get_employees_reports(self):
+        c = self._conn.cursor()
+        all = c.execute("""
+            SELECT Employees.name, Employees.salary ,Coffee_stands.location ,Sales.sum_sales 
+            FROM (Employees left inner join Coffee_stands on Employees.coffee_stand=Coffee_stands.id) 
+            left inner join sales on Employees.id=sales.id_employee
+        """).fetchall()
+
+        return [employees_report(*row) for row in all]
+
+class employees_report:
+        def __init__(self, Employees_name, Employees_salary ,Coffee_stands_location ,Sales_sum_sales):
+            self.Employees_name = Employees_name
+            self.Employees_salary = Employees_salary
+            self.Coffee_stands_location = Coffee_stands_location
+            self.Sales_sum_sales = Sales_sum_sales
+
+        def __str__(self):
+            return str("{} {} {} {}".format(self.Employees_name, self.Employees_salary, self.Coffee_stands_location, self.Sales_sum_sales))
+
+
 
 
 repo = Repository()
