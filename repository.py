@@ -57,7 +57,7 @@ class Repository:
 
                     CREATE TABLE Sales (
                     id_employee      INTEGER    PRIMARY KEY REFERENCES Employees(id),
-                    sum_sales       INTEGER
+                    sum_sales       REAL
 
                 );
             """)
@@ -66,8 +66,8 @@ class Repository:
         c = self._conn.cursor()
         all = c.execute("""
             SELECT Employees.name, Employees.salary ,Coffee_stands.location ,Sales.sum_sales 
-            FROM (Employees left inner join Coffee_stands on Employees.coffee_stand=Coffee_stands.id) 
-            left inner join sales on Employees.id=sales.id_employee ORDER BY Employees.name ASC
+            FROM (Employees LEFT JOIN Coffee_stands on Employees.coffee_stand=Coffee_stands.id) 
+            LEFT JOIN Sales ON Employees.id=Sales.id_employee ORDER BY Employees.name ASC
         """).fetchall()
 
         return [employees_report(*row) for row in all]
@@ -78,7 +78,7 @@ class Repository:
                SELECT Activities.date, Products.description, Activities.quantity, Employees.name, Suppliers.name 
                FROM ((Activities left outer join Products on Activities.product_id=Products.id) 
                left outer join Employees on Activities.activator_id=Employees.id) left outer join Suppliers on Activities.activator_id=Suppliers.id
-               ORDER BY Activities.date DESC
+               ORDER BY Activities.date ASC
            """).fetchall()
 
         return [activities_report(*row) for row in all]

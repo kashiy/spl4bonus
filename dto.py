@@ -51,5 +51,8 @@ class Activitie:
 
 class sale:
     def __init__(self, id_employee, sum_sales):
-        self.id_employee = id_employee
-        self.sum_sales = sum_sales
+        self.id_employee = int(id_employee)
+        self.sum_sales = float(sum_sales)
+
+    def __str__(self):
+        return str("({}, {})".format(self.id_employee,  self.sum_sales))

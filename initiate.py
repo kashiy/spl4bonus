@@ -18,11 +18,11 @@ def main(args):
             word = line.strip().split(", ")
             if word[0] == "E":
                 repo.Employees.insert(dto.Employee(word[1], word[2], word[3], word[4]))
+                repo.Sales.insert(dto.sale(word[1], 0))
             elif word[0] == "S":
                 repo.Suppliers.insert(dto.Supplier(word[1], word[2], word[3]))
             elif word[0] == "P":
                 repo.Products.insert(dto.Product(word[1], word[2], word[3], 0))
-                repo.Sales.insert(dto.sale(word[1], 0))
             elif word[0] == "C":
                 repo.Coffee_stands.insert(dto.Coffee_stand(word[1], word[2], word[3]))
 
