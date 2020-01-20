@@ -5,7 +5,6 @@ import dao
 
 class Repository:
     def __init__(self):
-
         self._conn = sqlite3.connect('moncafe.db')
         self.Employees = dao.Employees(self._conn)
         self.Suppliers = dao.Suppliers(self._conn)
@@ -73,17 +72,41 @@ class Repository:
 
         return [employees_report(*row) for row in all]
 
+    def get_activities_reports(self):
+        c = self._conn.cursor()
+        all = c.execute("""
+               SELECT Activities.date, Products.description, Activities.quantity, Employees.name, Suppliers.name 
+               FROM ((Activities left outer join Products on Activities.product_id=Products.id) 
+               left outer join Employees on Activities.activator_id=Employees.id) left outer join Suppliers on Activities.activator_id=Suppliers.id
+           """).fetchall()
+
+        return [activities_report(*row) for row in all]
+
+
 class employees_report:
-        def __init__(self, Employees_name, Employees_salary ,Coffee_stands_location ,Sales_sum_sales):
-            self.Employees_name = Employees_name
-            self.Employees_salary = Employees_salary
-            self.Coffee_stands_location = Coffee_stands_location
-            self.Sales_sum_sales = Sales_sum_sales
+    def __init__(self, Employees_name, Employees_salary, Coffee_stands_location, Sales_sum_sales):
+        self.Employees_name = Employees_name
+        self.Employees_salary = Employees_salary
+        self.Coffee_stands_location = Coffee_stands_location
+        self.Sales_sum_sales = Sales_sum_sales
 
-        def __str__(self):
-            return str("{} {} {} {}".format(self.Employees_name, self.Employees_salary, self.Coffee_stands_location, self.Sales_sum_sales))
+    def __str__(self):
+        return str("{} {} {} {}".format(self.Employees_name, self.Employees_salary, self.Coffee_stands_location,
+                                        self.Sales_sum_sales))
 
 
+class activities_report:
+    def __init__(self, Activities_date, Products_description, Activities_quantity, Employees_name, Suppliers_name):
+        self.Activities_date = Activities_date
+        self.Products_description = Products_description
+        self.Activities_quantity = Activities_quantity
+        self.Employees_name = Employees_name
+        self.Suppliers_name = Suppliers_name
+
+    def __str__(self):
+        return str(
+            "({}, {}, {}, {}, {})".format(self.Activities_date, self.Products_description, self.Activities_quantity,
+                                          self.Employees_name, self.Suppliers_name))
 
 
 repo = Repository()
