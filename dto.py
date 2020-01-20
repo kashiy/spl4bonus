@@ -28,7 +28,7 @@ class Coffee_stand:
         self.number_of_employees = number_of_employees
 
 
-class Activity:
+class Activitie:
     def __init__(self, product_id, quantity, activator_id, date):
         self.product_id = product_id
         self.quantity = quantity

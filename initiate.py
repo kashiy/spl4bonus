@@ -12,49 +12,7 @@ atexit.register(_close_db)
 
 
 def main(args):
-    conn.executescript("""
-        CREATE TABLE Employees (
-            id      INTEGER         PRIMARY KEY,
-            name    TEXT        NOT NULL,
-            salary  REAL         NOT NULL,
-            coffee_stand INTEGER REFERENCES Coffee_stands(id)
 
-        );
-
-        CREATE TABLE Suppliers (
-            id      INTEGER         PRIMARY KEY,
-            name    TEXT        NOT NULL,
-            contact_information    TEXT
-
-        );
-
-        CREATE TABLE Products (
-            id  INTEGER PRIMARY KEY
-            description     TEXT        NOT NULL
-            price           REAL        NOT NULL
-            quantity        INTEGER     NOT NULL
-        );
-
-        CREATE TABLE Coffee_stands (
-            id INTEGER PRIMARY KEY
-            location TEXT NOT NULL
-            number_of_employees INTEGER
-        );
-
-        CREATE TABLE Activities (
-            product_id INTEGER REFERENCES Products(id)
-            quantity INTEGER NOT NULL
-            activator_id INTEGER NOT NULL
-            date DATE NOT NULL
-        );
-
-
-            CREATE TABLE sales (
-            id_employee      INTEGER    PRIMARY KEY REFERENCES Employees(id),
-            sum_sales       INTEGER
-
-
-    """)
 
     filepath = args[2]
 
