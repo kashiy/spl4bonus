@@ -105,9 +105,8 @@ class activities_report:
         self.Suppliers_name = Suppliers_name
 
     def __str__(self):
-        return str(
-            "({}, {}, {}, {}, {})".format(self.Activities_date, self.Products_description, self.Activities_quantity,
-                                          self.Employees_name, self.Suppliers_name))
+        return str((self.Activities_date, self.Products_description, self.Activities_quantity,
+                    self.Employees_name, self.Suppliers_name))
 
 
 repo = Repository()

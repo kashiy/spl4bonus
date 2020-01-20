@@ -6,7 +6,7 @@ class Employee:
         self.coffee_stand = int(coffee_stand)
 
     def __str__(self):
-        return str("({}, {}, {}, {})".format(self.id, self.name, self.salary, self.coffee_stand))
+        return str((self.id, self.name, self.salary, self.coffee_stand))
 
 
 class Supplier:
@@ -16,7 +16,7 @@ class Supplier:
         self.contact_information = contact_information
 
     def __str__(self):
-        return str("({}, {}, {})".format(self.id, self.name, self.contact_information))
+        return str((self.id, self.name, self.contact_information))
 
 
 class Product:
@@ -27,7 +27,7 @@ class Product:
         self.quantity = int(quantity)
 
     def __str__(self):
-        return str("({}, {}, {}, {})".format(self.id, self.description, self.price, self.quantity))
+        return str((self.id, self.description, self.price, self.quantity))
 
 
 class Coffee_stand:
@@ -37,7 +37,7 @@ class Coffee_stand:
         self.number_of_employees = int(number_of_employees)
 
     def __str__(self):
-        return str("({}, {}, {})".format(self.id, self.location, self.number_of_employees))
+        return str((self.id, self.location, self.number_of_employees))
 
 class Activitie:
     def __init__(self, product_id, quantity, activator_id, date):
@@ -47,7 +47,7 @@ class Activitie:
         self.date = date
 
     def __str__(self):
-        return str("({}, {}, {}, {})".format(self.product_id, self.quantity, self.activator_id, self.date))
+        return str((self.product_id, self.quantity, self.activator_id, self.date))
 
 class sale:
     def __init__(self, id_employee, sum_sales):
@@ -55,4 +55,4 @@ class sale:
         self.sum_sales = float(sum_sales)
 
     def __str__(self):
-        return str("({}, {})".format(self.id_employee,  self.sum_sales))
+        return str((self.id_employee,  self.sum_sales))
