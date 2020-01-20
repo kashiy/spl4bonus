@@ -12,7 +12,7 @@ import dto
 def main(args):
     repo.create_tables()
 
-    filepath = args[2]
+    filepath = args[1] ## todo change to 2
     with open(filepath) as fp:
         for line in fp:
             word = line.strip().split(", ")

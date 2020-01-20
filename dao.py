@@ -1,4 +1,3 @@
-import sqlite3
 import dto
 
 
@@ -107,8 +106,8 @@ class Sales:
 
     def insert(self, sale):
         self._conn.execute("""
-            INSERT INTO sales (id,0) VALUES (?)
-        """, [sale.id])
+            INSERT INTO sales (id_employee,sum_sales) VALUES (?,?)
+        """, [sale.id_employee,0])
 
     def update_quantity(self, product_id, amount):
         self._conn.execute("""

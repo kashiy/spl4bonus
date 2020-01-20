@@ -35,22 +35,22 @@ class Repository:
                 );
 
                 CREATE TABLE Products (
-                    id  INTEGER PRIMARY KEY
-                    description     TEXT        NOT NULL
-                    price           REAL        NOT NULL
+                    id  INTEGER PRIMARY KEY,
+                    description TEXT    NOT NULL,
+                    price           REAL        NOT NULL,
                     quantity        INTEGER     NOT NULL
                 );
 
                 CREATE TABLE Coffee_stands (
-                    id INTEGER PRIMARY KEY
-                    location TEXT NOT NULL
+                    id INTEGER PRIMARY KEY,
+                    location TEXT NOT NULL,
                     number_of_employees INTEGER
                 );
 
                 CREATE TABLE Activities (
-                    product_id INTEGER REFERENCES Products(id)
-                    quantity INTEGER NOT NULL
-                    activator_id INTEGER NOT NULL
+                    product_id INTEGER REFERENCES Products(id),
+                    quantity INTEGER NOT NULL,
+                    activator_id INTEGER NOT NULL,
                     date DATE NOT NULL
                 );
 
@@ -67,7 +67,7 @@ class Repository:
         all = c.execute("""
             SELECT Employees.name, Employees.salary ,Coffee_stands.location ,Sales.sum_sales 
             FROM (Employees left inner join Coffee_stands on Employees.coffee_stand=Coffee_stands.id) 
-            left inner join sales on Employees.id=sales.id_employee
+            left inner join sales on Employees.id=sales.id_employee ORDER BY Employees.name ASC
         """).fetchall()
 
         return [employees_report(*row) for row in all]
@@ -78,6 +78,7 @@ class Repository:
                SELECT Activities.date, Products.description, Activities.quantity, Employees.name, Suppliers.name 
                FROM ((Activities left outer join Products on Activities.product_id=Products.id) 
                left outer join Employees on Activities.activator_id=Employees.id) left outer join Suppliers on Activities.activator_id=Suppliers.id
+               ORDER BY Activities.date DESC
            """).fetchall()
 
         return [activities_report(*row) for row in all]

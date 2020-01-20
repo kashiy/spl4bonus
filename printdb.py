@@ -1,13 +1,13 @@
 from repository import repo
-import dao
+
 
 
 def printdb():
-    print_table_as_a_table("Activities", dao.Activities.find_all("Activities.date"))
-    print_table_as_a_table("Coffee_stands", dao.Coffee_stands.find_all("Coffee_stands.id"))
-    print_table_as_a_table("Employees", dao.Employees.find_all("Employees.id"))
-    print_table_as_a_table("Products", dao.Products.find_all("Products.id"))
-    print_table_as_a_table("Suppliers", dao.Suppliers.find_all("Suppliers.id"))
+    print_table_as_a_table("Activities", repo.Activities.find_all("Activities.date"))
+    print_table_as_a_table("Coffee_stands", repo.Coffee_stands.find_all("Coffee_stands.id"))
+    print_table_as_a_table("Employees", repo.Employees.find_all("Employees.id"))
+    print_table_as_a_table("Products", repo.Products.find_all("Products.id"))
+    print_table_as_a_table("Suppliers", repo.Suppliers.find_all("Suppliers.id"))
     employees_report()
     activities_report()
 
